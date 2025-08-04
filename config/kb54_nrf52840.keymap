@@ -70,7 +70,7 @@
             bindings = <
    &kp GRAVE    &kp N1      &kp N2      &kp N3      &kp N4      &kp N5              &kp N6          &kp N7      &kp N8      &kp N9      &kp N0          &kp DEL
    &kp ESC      &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT           &kp CARET       &kp AMPS    &kp STAR    &kp MINUS   &none           &kp BSPC
-   &kp GRAVE    &none       &none       &none       &none       &kp PLUS            &kp HOME        &kp LBRC    &kp RBRC    &kp END     &kp BSLH        &kp RET
+   &kp GRAVE    &kp TILDE   &none       &none       &none       &kp PLUS            &kp HOME        &kp LBRC    &kp RBRC    &kp END     &kp BSLH        &kp RET
    &kp TAB      &none       &none       &none       &none       &kp MINUS           &kp LBKT        &kp LPAR    &kp RPAR    &kp RBKT    &none           &none
                                         &kp LCMD    &kp LSHFT   &kp LCTRL           &none           &kp SPACE   &none
             >;
