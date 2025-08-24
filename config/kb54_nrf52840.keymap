@@ -19,8 +19,8 @@
         compatible = "zmk,combos";
         combo_nav {
             timeout-ms = <100>;
-            /* (left thumb right) + (right thumb central) */
-            key-positions = <50 52>;
+            /* both inner thumbs */
+            key-positions = <50 51>;
             bindings = <&mo NAV_L>;
         };
     };
