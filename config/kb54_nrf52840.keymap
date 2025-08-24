@@ -57,9 +57,9 @@
 			label = "NUM";
             bindings = <
    &kp GRAVE    &kp N1          &kp N2          &kp N3          &kp N4          &kp N5                          &kp N6          &kp N7      &kp N8      &kp N9      &kp N0          &kp DEL
-   &kp ESC      &none           &none           &none           &none           &none                           &none           &hm F7 N7   &hm F8 N8   &hm F9 N9   &none           &hm DEL BSPC
-   &none        &none           &none           &none           &kp STAR        &kp PLUS                        &kp EQUAL       &hm F4 N4   &hm F5 N5   &hm F6 N6   &hm F12 DOT     &kp RET
-   &kp TAB      &none           &none           &none           &kp FSLH        &kp MINUS                       &hm F10 N0		&hm F1 N1   &hm F2 N2   &hm F3 N3   &kp COMMA       &none
+   &kp ESC      &none           &none           &kp LPAR        &kp RPAR        &none                           &none           &hm F7 N7   &hm F8 N8   &hm F9 N9   &none           &hm DEL BSPC
+   &none        &none           &kp STAR        &kp FSLH        &kp PLUS        &kp MINUS                       &kp EQUAL       &hm F4 N4   &hm F5 N5   &hm F6 N6   &hm F12 DOT     &kp RET
+   &kp TAB      &none           &none           &none           &kp DOT         &kp COMMA                       &hm F10 N0		&hm F1 N1   &hm F2 N2   &hm F3 N3   &kp COMMA       &none
                                                 &kp LCMD        &kp LSHFT       &kp LCTRL                       &none           &kp SPACE   &none
             >;
         };
