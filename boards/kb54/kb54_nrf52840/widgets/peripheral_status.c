@@ -27,6 +27,9 @@ static void draw(struct zmk_widget_status *widget) {
     lv_obj_t *canvas = lv_obj_get_child(zmk_widget_status_obj(widget), 0);
     lv_canvas_fill_bg(canvas, lv_color_white(), LV_OPA_COVER);
 
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
     /////// Battery
     char *battery_symbol;
     if (widget->state.charging) {
@@ -46,13 +49,19 @@ static void draw(struct zmk_widget_status *widget) {
         }
     }
     sprintf(battery_text_left, "%s %i%%", battery_symbol, widget->state.battery);
-    lv_canvas_draw_text(canvas, 0, 46, 128, &battery_label_left, battery_text_left);
+    battery_label_left.text = battery_text_left;
+    lv_area_t battery_coords = {0, 46, 127, 127};
+    lv_draw_label(&layer, &battery_label_left, &battery_coords);
 
     /////// PROFILE
     sprintf(connection_text, "%s",
             widget->state.connected ? (LV_SYMBOL_BLUETOOTH " " LV_SYMBOL_OK)
                                     : (LV_SYMBOL_BLUETOOTH " " LV_SYMBOL_CLOSE));
-    lv_canvas_draw_text(canvas, 0, CANVAS_SIZE - 32, 128, &connection_label, connection_text);
+    connection_label.text = connection_text;
+    lv_area_t conn_coords = {0, CANVAS_SIZE - 32, 127, CANVAS_SIZE - 1};
+    lv_draw_label(&layer, &connection_label, &conn_coords);
+
+    lv_canvas_finish_layer(canvas, &layer);
 
     rotate_canvas(canvas, widget->cbuf);
 }
@@ -125,7 +134,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     // Canvas.
     lv_obj_t *top = lv_canvas_create(widget->obj);
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
-    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_COLOR_FORMAT_NATIVE);
 
     // Peripheral.
     lv_draw_label_dsc_init(&connection_label);

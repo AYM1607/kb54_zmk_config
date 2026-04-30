@@ -34,13 +34,18 @@ static void draw(struct zmk_widget_status *widget) {
     lv_obj_t *canvas = lv_obj_get_child(zmk_widget_status_obj(widget), 0);
     lv_canvas_fill_bg(canvas, lv_color_white(), LV_OPA_COVER);
 
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
     /////// LAYER
     if (widget->state.layer_label == NULL || strlen(widget->state.layer_label) > 12) {
         sprintf(layer_text, "LAYER: %i", widget->state.layer_index);
     } else {
         sprintf(layer_text, "LAYER: %s", widget->state.layer_label);
     }
-    lv_canvas_draw_text(canvas, 0, 15, 128, &layer_label, layer_text);
+    layer_label.text = layer_text;
+    lv_area_t layer_coords = {0, 15, 127, 127};
+    lv_draw_label(&layer, &layer_label, &layer_coords);
 
     /////// Battery
     char *battery_symbol;
@@ -61,7 +66,9 @@ static void draw(struct zmk_widget_status *widget) {
         }
     }
     sprintf(battery_text_left, "%s %i%%", battery_symbol, widget->state.battery);
-    lv_canvas_draw_text(canvas, 0, 46, 128, &battery_label_left, battery_text_left);
+    battery_label_left.text = battery_text_left;
+    lv_area_t battery_coords = {0, 46, 127, 127};
+    lv_draw_label(&layer, &battery_label_left, &battery_coords);
 
     /////// PROFILE
     profile_label_left.align = LV_TEXT_ALIGN_LEFT;
@@ -86,11 +93,23 @@ static void draw(struct zmk_widget_status *widget) {
             sprintf(profile_text_right, "%s", LV_SYMBOL_SETTINGS);
         }
         break;
+    default:
+        profile_text_padding = 0;
+        profile_label_left.align = LV_TEXT_ALIGN_CENTER;
+        sprintf(profile_text_left, "%s", LV_SYMBOL_CLOSE);
+        sprintf(profile_text_right, "%s", "");
+        break;
     }
-    lv_canvas_draw_text(canvas, profile_text_padding, CANVAS_SIZE - 32, 128, &profile_label_left,
-                        profile_text_left);
-    lv_canvas_draw_text(canvas, -profile_text_padding, CANVAS_SIZE - 32, 128, &profile_label_right,
-                        profile_text_right);
+    profile_label_left.text = profile_text_left;
+    lv_area_t profile_left_coords = {profile_text_padding, CANVAS_SIZE - 32, 127, CANVAS_SIZE - 1};
+    lv_draw_label(&layer, &profile_label_left, &profile_left_coords);
+
+    profile_label_right.text = profile_text_right;
+    lv_area_t profile_right_coords = {0, CANVAS_SIZE - 32, 127 - profile_text_padding,
+                                      CANVAS_SIZE - 1};
+    lv_draw_label(&layer, &profile_label_right, &profile_right_coords);
+
+    lv_canvas_finish_layer(canvas, &layer);
 
     rotate_canvas(canvas, widget->cbuf);
 }
@@ -151,7 +170,7 @@ static void output_status_update_cb(struct output_status_state state) {
 
 static struct output_status_state output_status_get_state(const zmk_event_t *_eh) {
     return (struct output_status_state){
-        .selected_endpoint = zmk_endpoints_selected(),
+        .selected_endpoint = zmk_endpoint_get_selected(),
         .active_profile_index = zmk_ble_active_profile_index(),
         .active_profile_connected = zmk_ble_active_profile_is_connected(),
         .active_profile_bonded = !zmk_ble_active_profile_is_open(),
@@ -202,7 +221,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     // Canvas.
     lv_obj_t *top = lv_canvas_create(widget->obj);
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
-    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_COLOR_FORMAT_NATIVE);
 
     // Layer.
     lv_draw_label_dsc_init(&layer_label);
