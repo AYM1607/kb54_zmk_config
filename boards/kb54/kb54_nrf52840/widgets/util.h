@@ -4,6 +4,10 @@
 #include <zmk/endpoints.h>
 
 #define CANVAS_SIZE 128
+#define CANVAS_COLOR_FORMAT LV_COLOR_FORMAT_L8
+#define CANVAS_BUF_SIZE                                                                            \
+    LV_CANVAS_BUF_SIZE(CANVAS_SIZE, CANVAS_SIZE, LV_COLOR_FORMAT_GET_BPP(CANVAS_COLOR_FORMAT),     \
+                        LV_DRAW_BUF_STRIDE_ALIGN)
 
 struct status_state {
     uint8_t battery;
@@ -43,4 +47,4 @@ struct peripheral_status_state {
     bool connected;
 };
 
-void rotate_canvas(lv_obj_t *canvas, lv_color_t *cbuf);
+void rotate_canvas(lv_obj_t *canvas);

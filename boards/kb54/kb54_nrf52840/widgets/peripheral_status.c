@@ -63,7 +63,7 @@ static void draw(struct zmk_widget_status *widget) {
 
     lv_canvas_finish_layer(canvas, &layer);
 
-    rotate_canvas(canvas, widget->cbuf);
+    rotate_canvas(canvas);
 }
 
 //////////////////////////////// Battery ////////////////////////////////////
@@ -134,7 +134,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     // Canvas.
     lv_obj_t *top = lv_canvas_create(widget->obj);
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
-    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_COLOR_FORMAT_NATIVE);
+    lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, CANVAS_COLOR_FORMAT);
 
     // Peripheral.
     lv_draw_label_dsc_init(&connection_label);

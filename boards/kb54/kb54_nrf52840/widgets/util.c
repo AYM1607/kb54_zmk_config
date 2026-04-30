@@ -2,13 +2,11 @@
 
 #include <lvgl.h>
 
-void rotate_canvas(lv_obj_t *canvas, lv_color_t *cbuf) {
-    // 180° rotation is a simple buffer reversal
-    int total = CANVAS_SIZE * CANVAS_SIZE;
-    for (int i = 0; i < total / 2; i++) {
-        lv_color_t tmp = cbuf[i];
-        cbuf[i] = cbuf[total - 1 - i];
-        cbuf[total - 1 - i] = tmp;
-    }
-    lv_obj_invalidate(canvas);
+void rotate_canvas(lv_obj_t *canvas) {
+    uint8_t *buf = lv_canvas_get_draw_buf(canvas)->data;
+    static uint8_t buf_copy[CANVAS_BUF_SIZE];
+    memcpy(buf_copy, buf, sizeof(buf_copy));
+    const uint32_t stride = lv_draw_buf_width_to_stride(CANVAS_SIZE, CANVAS_COLOR_FORMAT);
+    lv_draw_sw_rotate(buf_copy, buf, CANVAS_SIZE, CANVAS_SIZE, stride, stride,
+                      LV_DISPLAY_ROTATION_180, CANVAS_COLOR_FORMAT);
 }
