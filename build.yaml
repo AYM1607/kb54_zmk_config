@@ -18,10 +18,10 @@
 #
 ---
 include:
-  - board: kb54_nrf52840_l
-  - board: kb54_nrf52840_r
+  - board: kb54_nrf52840_l//zmk
+  - board: kb54_nrf52840_r//zmk
 # Uncomment the following lines to generate the settings reset firmware images
-  # - board: kb54_nrf52840_l
+  # - board: kb54_nrf52840_l//zmk
   #   shield: settings_reset
-  # - board: kb54_nrf52840_r
+  # - board: kb54_nrf52840_r//zmk
   #   shield: settings_reset

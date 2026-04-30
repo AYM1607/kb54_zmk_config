@@ -1,8 +1,0 @@
-if BOARD_KB54_NRF52840_L || BOARD_KB54_NRF52840_R
-
-config BOARD_ENABLE_DCDC
-    bool "DCDC mode"
-    select SOC_DCDC_NRF52X
-    default y
-
-endif # BOARD_KB54_NRF52840_L || BOARD_KB54_NRF52840_R

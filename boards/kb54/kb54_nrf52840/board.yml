@@ -1,0 +1,13 @@
+boards:
+  - name: kb54_nrf52840_l
+    vendor: kb54
+    socs:
+      - name: nrf52840
+        variants:
+          - name: zmk
+  - name: kb54_nrf52840_r
+    vendor: kb54
+    socs:
+      - name: nrf52840
+        variants:
+          - name: zmk

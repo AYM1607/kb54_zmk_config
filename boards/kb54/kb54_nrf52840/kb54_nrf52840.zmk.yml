@@ -10,4 +10,5 @@ outputs:
   - usb
   - ble
 siblings:
-  - kb54_nrf52840_l
+  - kb54_nrf52840_l//zmk
+  - kb54_nrf52840_r//zmk

@@ -1,21 +1,9 @@
 if BOARD_KB54_NRF52840_L
 
-config BOARD
-    default "kb54_nrf52840_l"
-
 config ZMK_SPLIT_BLE_ROLE_CENTRAL
     default y
 
 endif # BOARD_KB54_NRF52840_L
-
-
-
-if BOARD_KB54_NRF52840_R
-
-config BOARD
-    default "kb54_nrf52840_r"
-
-endif # BOARD_KB54_NRF52840_R
 
 
 
@@ -29,9 +17,6 @@ config BT_CTLR
 
 config ZMK_KSCAN_MATRIX_WAIT_BETWEEN_OUTPUTS
     default 5
-
-config PINCTRL
-    default y
 
 # These come from boards/shields/nice_view figure out what they're for.
 config LV_Z_VDB_SIZE

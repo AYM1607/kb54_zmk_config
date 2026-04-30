@@ -7,6 +7,7 @@
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <zephyr/dt-bindings/regulator/nrf5x.h>
 
 
 / {
@@ -176,4 +177,8 @@
 
 &uicr {
   nfct-pins-as-gpios;
+};
+
+&reg1 {
+    regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
 };
